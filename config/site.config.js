@@ -36,7 +36,7 @@ export const SITE_CONFIG = {
     { id: 'cultura',      icon: 'shield-check',    label: 'Cultura de Calidad'               },
     { id: 'estrategia',   icon: 'layers',          label: 'Marco de Pruebas'                 },
     { id: 'playbook',     icon: 'code-2',          label: 'Playbook Técnico'                 },
-    { id: 'documentacion',icon: 'book-open',       label: 'Documentación'                    },
+    //{ id: 'documentacion',icon: 'book-open',       label: 'Documentación'                    },
     { id: 'colaboracion', icon: 'users-2',         label: 'Colaboración QA'                  },
     { id: 'onboarding',   icon: 'clipboard-check', label: 'Onboarding'                       },
   ],
