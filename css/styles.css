@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+
+.sidebar-link.active {
+  background-color: #1e293b;
+  color: #38bdf8;
+  border-right: 4px solid #38bdf8;
+}
+
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+  font-size: 0.9rem;
+  border-radius: 0.5rem;
+}
+
+.check-item:checked + span {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.mermaid { overflow-x: auto; }
+.mermaid svg { max-width: 100%; height: auto; }
