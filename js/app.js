@@ -27,8 +27,10 @@ import { SectionRegistry }      from './sections/SectionRegistry.js';
 
 // ── Secciones concretas ─────────────────────────────────────────────────────
 import { HomeSection }          from './sections/HomeSection.js';
+import { ConsultorExitosoSection } from './sections/ConsultorExitosoSection.js';
 import { CulturaSection }       from './sections/CulturaSection.js';
 import { EstrategiaSection }    from './sections/EstrategiaSection.js';
+import { MetricasKpisSection }  from './sections/MetricasKpisSection.js';
 import { PlaybookSection }      from './sections/PlaybookSection.js';
 import { DocumentacionSection } from './sections/DocumentacionSection.js';
 import { ColaboracionSection }  from './sections/ColaboracionSection.js';
@@ -42,8 +44,10 @@ const onboardingManager = new OnboardingManager();
 // ── 2. Construir el registro e inyectar dependencias en las secciones ───────
 const registry = new SectionRegistry();
 registry.register(new HomeSection());
+registry.register(new ConsultorExitosoSection());
 registry.register(new CulturaSection());
 registry.register(new EstrategiaSection());
+registry.register(new MetricasKpisSection());
 registry.register(new PlaybookSection(clipboardManager));
 registry.register(new DocumentacionSection());
 registry.register(new ColaboracionSection());

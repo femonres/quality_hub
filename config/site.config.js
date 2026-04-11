@@ -33,8 +33,10 @@ export const SITE_CONFIG = {
    */
   nav: [
     { id: 'home',         icon: 'home',            label: 'Inicio',            default: true },
+    { id: 'consultor-exitoso', icon: 'handshake',  label: 'Consultor Exitoso'              },
     { id: 'cultura',      icon: 'shield-check',    label: 'Cultura de Calidad'               },
-    { id: 'estrategia',   icon: 'layers',          label: 'Marco de Pruebas'                 },
+    { id: 'estrategia',   icon: 'layers',          label: 'Estrategia de Pruebas'            },
+    { id: 'metricas-kpis',icon: 'bar-chart-2',     label: 'Métricas y KPIs'                  },
     { id: 'playbook',     icon: 'code-2',          label: 'Playbook Técnico'                 },
     //{ id: 'documentacion',icon: 'book-open',       label: 'Documentación'                    },
     { id: 'colaboracion', icon: 'users-2',         label: 'Colaboración QA'                  },
