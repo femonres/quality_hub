@@ -38,6 +38,7 @@ export const SITE_CONFIG = {
     { id: 'estrategia',   icon: 'layers',          label: 'Estrategia de Pruebas'            },
     { id: 'metricas-kpis',icon: 'bar-chart-2',     label: 'Métricas y KPIs'                  },
     { id: 'playbook',     icon: 'code-2',          label: 'Playbook Técnico'                 },
+    { id: 'ia-colaborativa', icon: 'bot',          label: 'IA Colaborativa'                  },
     //{ id: 'documentacion',icon: 'book-open',       label: 'Documentación'                    },
     { id: 'colaboracion', icon: 'users-2',         label: 'Colaboración QA'                  },
     { id: 'onboarding',   icon: 'clipboard-check', label: 'Onboarding'                       },
