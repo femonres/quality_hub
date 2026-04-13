@@ -1,4 +1,4 @@
-import { SectionBase } from './SectionBase.js';
+import { SectionBase } from "./SectionBase.js";
 
 /**
  * @file HomeSection.js
@@ -7,10 +7,12 @@ import { SectionBase } from './SectionBase.js';
  * Usa `data-navigate` para delegar la navegación al Router (DIP).
  */
 export class HomeSection extends SectionBase {
-  get id() { return 'home'; }
+  get id() {
+    return "home";
+  }
 
   render() {
-    return /* html */`
+    return /* html */ `
 
       <!-- ── Hero: El Nuevo Estándar de Ingeniería ──────────────────────── -->
       <div class="relative bg-gradient-to-br from-blue-950/60 via-slate-900 to-indigo-950/60 border border-blue-400/30 rounded-3xl p-10 overflow-hidden">
@@ -134,6 +136,8 @@ export class HomeSection extends SectionBase {
         </div>
       </div>
 
+      ${this._renderUnitTest()}
+
       <!-- ── Tu Huella en el Proyecto ────────────────────────────────────── -->
       <div class="relative bg-gradient-to-r from-indigo-950/60 via-slate-900 to-blue-950/60 border border-indigo-500/30 rounded-2xl p-8 overflow-hidden">
         <div class="absolute right-0 top-0 w-1/2 h-full bg-indigo-600/10 blur-[80px] pointer-events-none"></div>
@@ -152,5 +156,157 @@ export class HomeSection extends SectionBase {
       </div>
 
     `;
+  }
+
+  _renderUnitTest() {
+    return /* html */ `
+      <div>
+        <h2 class="text-3xl font-bold mb-2">Que son las pruebas unitarias</h2>
+        <p class="text-slate-400 text-justify max-w-4xl">
+          Las <strong class="text-white">pruebas unitarias</strong>, son un método de testing de software que verifica el correcto
+          funcionamiento de los componentes individuales más pequeños (funciones, métodos o clases) de forma aislada. 
+          Su objetivo principal es asegurar que cada unidad cumpla con las especificaciones de diseño.
+        </p>
+        <p class="text-slate-400 text-justify max-w-4xl mt-2">
+          Estas pruebas deben ser fáciles de escribir y de leer, confiables y completamente independientes, es decir, no deben
+          depender de recursos externos como bases de datos, servicios o sistemas externos.
+        </p>
+      </div>
+      ${this._renderUnitTestBenefitsAndMythsGrid()}
+      ${this._renderUnitTestPatternGrid()}
+    `;
+  }
+
+  _renderUnitTestBenefitsAndMythsGrid() {
+    return /* html */ `
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <article class="bg-slate-950 border border-blue-500/25 rounded-2xl p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-blue-500/10 text-blue-400 rounded-lg flex items-center justify-center ring-1 ring-blue-500/20">
+              <i data-lucide="sparkles" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Beneficios</h3>
+          </div>
+          <ul class="space-y-4 text-sm text-slate-300">
+            <li class="border-l-2 border-blue-500/40 pl-4">
+              <strong class="text-white">Detección temprana de errores:</strong>
+              Facilita la corrección de fallos en etapas iniciales, lo que es menos costoso.
+            </li>
+            <li class="border-l-2 border-blue-500/40 pl-4">
+              <strong class="text-white">Refactorización segura:</strong>
+              Garantizan que los cambios en el código no rompan funcionalidades existentes.
+            </li>
+            <li class="border-l-2 border-blue-500/40 pl-4">
+              <strong class="text-white">Documentación:</strong>
+              Sirven como ejemplos documentados de cómo debe comportarse el código.
+            </li>
+          </ul>
+        </article>
+
+        <article class="bg-slate-950 border border-red-500/25 rounded-2xl p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-red-500/10 text-red-400 rounded-lg flex items-center justify-center ring-1 ring-red-500/20">
+              <i data-lucide="help-circle" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Mitos</h3>
+          </div>
+          <ul class="space-y-4 text-sm text-slate-300">
+            <li class="border-l-2 border-red-500/40 pl-4">
+              Hacen que mi aplicación no tenga errores.
+            </li>
+            <li class="border-l-2 border-red-500/40 pl-4">
+              Las pruebas no pueden fallar.
+            </li>
+            <li class="border-l-2 border-red-500/40 pl-4">
+              Hacen mas lenta mi aplicación.
+            </li>
+            <li class="border-l-2 border-red-500/40 pl-4">
+              Hay que probar todo.
+            </li>
+          </ul>
+        </article>
+      </div>`;
+  }
+
+  _renderUnitTestPatternGrid() {
+    return /* html */ `
+      <div class="bg-slate-950 border border-amber-500/25 rounded-2xl p-7">
+        <div class="flex items-start gap-4 mb-5">
+          <div class="w-11 h-11 bg-amber-500/10 text-amber-300 rounded-xl flex items-center justify-center ring-1 ring-amber-500/25">
+            <i data-lucide="flame" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold text-white">Buenas Practicas</h3>
+            <p class="text-slate-400 text-sm mt-1">Para escribir tests claros, mantenibles y confiables. Se utiliza un patrón básico de testing llamado:</p>
+          </div>
+        </div>
+
+        <div class="flex justify-center my-10">
+          <div class="flex items-center gap-6 p-6 rounded-xl">
+            <div class="text-4xl font-bold text-yellow-600">
+              AAA =
+            </div>
+            <div class="flex gap-4">
+              <div class="border-2 border-yellow-600 rounded-xl p-4 text-center w-24">
+                <div class="text-3xl font-bold text-yellow-700">A</div>
+                <div class="mt-2 text-sm text-yellow-600">Arrange</div>
+              </div>
+              <div class="border-2 border-yellow-600 rounded-xl p-4 text-center w-24">
+                <div class="text-3xl font-bold text-yellow-700">A</div>
+                <div class="mt-2 text-sm text-yellow-600">Act</div>
+              </div>
+              <div class="border-2 border-yellow-600 rounded-xl p-4 text-center w-24">
+                <div class="text-3xl font-bold text-yellow-700">A</div>
+                <div class="mt-2 text-sm text-yellow-600">Assert</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+            <p class="text-xs text-yellow-600 font-semibold tracking-wider uppercase mb-2">
+              <strong>Arrange</strong> (Arreglar)
+            </p>
+            <p class="text-sm text-slate-300">Preparamos el estado inicial.</p>
+            <ul class="m-2 space-y-2 text-sm text-slate-300">
+              <li class="border-l-2 border-amber-500/40 pl-4">
+                Inicializamos Variables.
+              </li>
+              <li class="border-l-2 border-amber-500/40 pl-4">
+                Importaciones necesarias.
+              </li>
+            </ul>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+            <p class="text-xs text-yellow-600 font-semibold tracking-wider uppercase mb-2">
+              <strong>Act</strong> (Actuar)
+            </p>
+            <p class="text-sm text-slate-300">Aplicamos acciones o estímulos.</p>
+            <ul class="m-2 space-y-2 text-sm text-slate-300">
+              <li class="border-l-2 border-amber-500/40 pl-4">
+                Llamar métodos.
+              </li>
+              <li class="border-l-2 border-amber-500/40 pl-4">
+                Simular Clicks.
+              </li>
+            </ul>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+            <p class="text-xs text-yellow-600 font-semibold tracking-wider uppercase mb-2">
+              <strong>Assert</strong> (Afirmar)
+            </p>
+            <p class="text-sm text-slate-300">Observar el comportamiento resultante.</p>
+            <ul class="m-2 space-y-2 text-sm text-slate-300">
+              <li class="border-l-2 border-amber-500/40 pl-4">
+                Son los resultados esperados.
+              </li>
+              <li class="border-l-2 border-amber-500/40 pl-4">
+                Ejemplo: Que algo cambie, que algo se igual a otra cosa.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>`;
   }
 }
