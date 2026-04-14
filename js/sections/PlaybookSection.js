@@ -354,10 +354,10 @@ chore(ci): ejecutar smoke tests post-deploy en QA</code></pre>
    * @param {boolean} isFirst
    */
   _renderStackTab({ id, label }, isFirst) {
-    const activeClass = "border-blue-500 text-blue-400";
-    const inactiveClass = "border-transparent text-slate-500";
+    const activeClass = "border-blue-400 text-white bg-blue-500/15 shadow-[inset_0_-2px_0_0_rgba(96,165,250,1)]";
+    const inactiveClass = "border-transparent text-slate-500 bg-transparent";
     return /* html */ `
-      <button data-stack="${id}" class="code-tab px-6 py-4 text-sm font-medium border-b-2 ${isFirst ? activeClass : inactiveClass}">
+      <button data-stack="${id}" class="code-tab px-6 py-4 text-sm font-semibold border-b-2 transition-colors duration-200 hover:text-slate-200 hover:bg-slate-800/30 ${isFirst ? activeClass : inactiveClass}">
         ${label}
       </button>`;
   }
