@@ -1,6 +1,6 @@
-import { SectionBase }   from './SectionBase.js';
-import { CodeSwitcher }  from '../core/CodeSwitcher.js';
-import { STACK_CONFIGS } from './playbook/stacks.config.js';
+import { SectionBase } from "./SectionBase.js";
+import { CodeSwitcher } from "../core/CodeSwitcher.js";
+import { STACK_CONFIGS } from "./playbook/stacks.config.js";
 
 /**
  * @file PlaybookSection.js
@@ -32,11 +32,13 @@ export class PlaybookSection extends SectionBase {
   constructor(clipboardManager) {
     super();
     this._clipboard = clipboardManager;
-    this._switcher  = null;
-    this._bound     = false;
+    this._switcher = null;
+    this._bound = false;
   }
 
-  get id() { return 'playbook'; }
+  get id() {
+    return "playbook";
+  }
 
   // ── Renderizado principal ─────────────────────────────────────────────────
 
@@ -49,13 +51,13 @@ export class PlaybookSection extends SectionBase {
       this._renderGitFlowGrid(),
       this._renderPrTemplate(),
       this._renderBottomGrid(),
-    ].join('\n');
+    ].join("\n");
   }
 
   // ── Bloques de sección ────────────────────────────────────────────────────
 
   _renderIntro() {
-    return /* html */`
+    return /* html */ `
       <div>
         <h2 class="text-3xl font-bold mb-2">Lineamientos de Código y Datos</h2>
         <p class="text-slate-400 max-w-4xl">
@@ -66,7 +68,7 @@ export class PlaybookSection extends SectionBase {
   }
 
   _renderStandardsGrid() {
-    return /* html */`
+    return /* html */ `
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <article class="bg-slate-950 border border-blue-500/25 rounded-2xl p-6">
           <div class="flex items-center gap-3 mb-4">
@@ -117,7 +119,7 @@ export class PlaybookSection extends SectionBase {
   }
 
   _renderComparisonTable() {
-    return /* html */`
+    return /* html */ `
       <div class="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden">
         <div class="p-4 border-b border-slate-800 bg-slate-900/50 flex items-center gap-2">
           <i data-lucide="git-compare" class="w-4 h-4 text-amber-300"></i>
@@ -156,10 +158,14 @@ export class PlaybookSection extends SectionBase {
 
   /** Genera tabs + paneles dinámicamente desde STACK_CONFIGS (OCP). */
   _renderStackContainer() {
-    const tabs   = STACK_CONFIGS.map((s, i) => this._renderStackTab(s, i === 0)).join('');
-    const panels = STACK_CONFIGS.map((s, i) => this._renderStackPanel(s, i === 0)).join('');
+    const tabs = STACK_CONFIGS.map((s, i) =>
+      this._renderStackTab(s, i === 0),
+    ).join("");
+    const panels = STACK_CONFIGS.map((s, i) =>
+      this._renderStackPanel(s, i === 0),
+    ).join("");
 
-    return /* html */`
+    return /* html */ `
       <div id="playbook-container" class="bg-slate-950 border border-slate-800 rounded-3xl overflow-hidden">
         <div class="p-5 border-b border-slate-800 bg-gradient-to-r from-indigo-950/40 via-slate-900 to-blue-950/40">
           <h3 class="text-lg font-bold text-white mb-1">Implementación por Stack Tecnológico</h3>
@@ -177,7 +183,7 @@ export class PlaybookSection extends SectionBase {
   }
 
   _renderGitFlowGrid() {
-    return /* html */`
+    return /* html */ `
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <article class="bg-slate-950 border border-indigo-500/25 rounded-2xl p-6">
           <div class="flex items-center gap-3 mb-4">
@@ -227,7 +233,7 @@ chore(ci): ejecutar smoke tests post-deploy en QA</code></pre>
   }
 
   _renderPrTemplate() {
-    return /* html */`
+    return /* html */ `
       <article class="bg-slate-950 border border-amber-500/25 rounded-2xl p-6">
         <div class="flex items-center gap-3 mb-4">
           <div class="w-10 h-10 bg-amber-500/10 text-amber-300 rounded-lg flex items-center justify-center ring-1 ring-amber-500/20">
@@ -302,7 +308,7 @@ chore(ci): ejecutar smoke tests post-deploy en QA</code></pre>
   }
 
   _renderBottomGrid() {
-    return /* html */`
+    return /* html */ `
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <article class="bg-slate-950 border border-rose-500/25 rounded-2xl p-6">
           <div class="flex items-center gap-3 mb-4">
@@ -348,9 +354,9 @@ chore(ci): ejecutar smoke tests post-deploy en QA</code></pre>
    * @param {boolean} isFirst
    */
   _renderStackTab({ id, label }, isFirst) {
-    const activeClass   = 'border-blue-500 text-blue-400';
-    const inactiveClass = 'border-transparent text-slate-500';
-    return /* html */`
+    const activeClass = "border-blue-500 text-blue-400";
+    const inactiveClass = "border-transparent text-slate-500";
+    return /* html */ `
       <button data-stack="${id}" class="code-tab px-6 py-4 text-sm font-medium border-b-2 ${isFirst ? activeClass : inactiveClass}">
         ${label}
       </button>`;
@@ -358,12 +364,13 @@ chore(ci): ejecutar smoke tests post-deploy en QA</code></pre>
 
   /**
    * Renderiza el panel de contenido para un stack.
-   * @param {{ id: string, badge: object, description: string, snippets: object }} stack
+   * @param {{ id: string, badge: object, description: string, snippets?: object, panel?: Function  }} stack
    * @param {boolean} isFirst
    */
-  _renderStackPanel({ id, badge, description, snippets }, isFirst) {
-    return /* html */`
-      <div id="code-${id}" class="code-content ${isFirst ? '' : 'hidden'} space-y-6">
+  _renderStackPanel({ id, badge, description, snippets, panel }, isFirst) {
+    if (snippets) {
+      return /* html */ `
+      <div id="code-${id}" class="code-content ${isFirst ? "" : "hidden"} space-y-6">
         <p class="text-slate-400 text-sm">${description}</p>
 
         <div class="flex justify-between items-center">
@@ -373,12 +380,38 @@ chore(ci): ejecutar smoke tests post-deploy en QA</code></pre>
           </button>
         </div>
 
-        ${this._renderCopyableSnippet('Configuración de pruebas', `${id}-config-sample`, snippets.config.lang, snippets.config.code, 'Copiar config')}
-        ${this._renderCopyableSnippet('Código implementado',     `${id}-impl-sample`,   snippets.impl.lang,   snippets.impl.code,   'Copiar implementación')}
+        ${this._renderCopyableSnippet("Configuración de pruebas", `${id}-config-sample`, snippets.config.lang, snippets.config.code, "Copiar config")}
+        ${this._renderCopyableSnippet("Código implementado", `${id}-impl-sample`, snippets.impl.lang, snippets.impl.code, "Copiar implementación")}
 
         <div class="space-y-2">
           <p class="text-xs uppercase tracking-wider text-slate-500">Prueba asociada</p>
           <pre><code id="${id}-test-sample" class="${snippets.test.lang}">${snippets.test.code}</code></pre>
+        </div>
+      </div>`;
+    }
+
+    if (panel) {
+      return /* html */ `
+      <div id="code-${id}" class="code-content ${isFirst ? "" : "hidden"} space-y-6">
+        <p class="text-slate-400 text-sm">${description}</p>
+        <div class="flex justify-between items-center">
+          <span class="text-xs ${badge.class} px-2 py-1 rounded">${badge.text}</span>
+          <button data-copy="${id}-test-sample" class="copy-btn text-xs text-slate-500 hover:text-white flex items-center gap-1">
+            <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+          </button>
+        </div>
+        ${panel()}
+      </div>`;
+    }
+
+    return /* html */ `
+      <div id="code-${id}" class="code-content ${isFirst ? "" : "hidden"} space-y-6">
+        <p class="text-slate-400 text-sm">${description}</p>
+        <div class="flex justify-between items-center">
+          <span class="text-xs ${badge.class} px-2 py-1 rounded">${badge.text}</span>
+          <button data-copy="${id}-test-sample" class="copy-btn text-xs text-slate-500 hover:text-white flex items-center gap-1">
+            <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+          </button>
         </div>
       </div>`;
   }
@@ -392,7 +425,7 @@ chore(ci): ejecutar smoke tests post-deploy en QA</code></pre>
    * @param {string} copyLabel  — texto del botón copiar
    */
   _renderCopyableSnippet(title, id, lang, code, copyLabel) {
-    return /* html */`
+    return /* html */ `
       <div class="space-y-2">
         <p class="text-xs uppercase tracking-wider text-slate-500">${title}</p>
         <div class="flex justify-end">
@@ -411,20 +444,20 @@ chore(ci): ejecutar smoke tests post-deploy en QA</code></pre>
     if (this._bound) return;
     this._bound = true;
 
-    const container = sectionEl.querySelector('#playbook-container');
+    const container = sectionEl.querySelector("#playbook-container");
     if (!container) return;
 
     this._switcher = new CodeSwitcher(container);
 
-    container.querySelectorAll('.code-tab').forEach((btn) => {
-      btn.addEventListener('click', () =>
-        this._switcher.switchTo(btn.dataset.stack, btn)
+    container.querySelectorAll(".code-tab").forEach((btn) => {
+      btn.addEventListener("click", () =>
+        this._switcher.switchTo(btn.dataset.stack, btn),
       );
     });
 
-    container.querySelectorAll('.copy-btn').forEach((btn) => {
-      btn.addEventListener('click', () =>
-        this._clipboard.copy(btn.dataset.copy, btn)
+    container.querySelectorAll(".copy-btn").forEach((btn) => {
+      btn.addEventListener("click", () =>
+        this._clipboard.copy(btn.dataset.copy, btn),
       );
     });
   }

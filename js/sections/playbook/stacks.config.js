@@ -1,3 +1,4 @@
+import { pythonPanel } from "./pythonPanel.js";
 /**
  * @file stacks.config.js
  * Configuración de datos para los paneles de código del Playbook.
@@ -18,6 +19,7 @@
  *     config    {object}  — { lang, code } — bloque de dependencias/configuración.
  *     impl      {object}  — { lang, code } — código de producción de ejemplo.
  *     test      {object}  — { lang, code } — prueba unitaria asociada.
+ *   panel       {Function}— Html customizado para el stack
  *
  * NOTA sobre el contenido de `code`:
  *   Los valores son cadenas HTML-safe (usan entidades como &lt; y &gt;) porque
@@ -27,14 +29,14 @@
 export const STACK_CONFIGS = [
   // ─── .NET ────────────────────────────────────────────────────────────────
   {
-    id: 'dotnet',
-    label: '.NET',
-    badge: { text: 'xUnit + Moq', class: 'bg-blue-500/10 text-blue-400' },
+    id: "dotnet",
+    label: ".NET",
+    badge: { text: "xUnit + Moq", class: "bg-blue-500/10 text-blue-400" },
     description:
-      'El estándar exige validar casos límite y excepciones para garantizar estabilidad en producción.',
+      "El estándar exige validar casos límite y excepciones para garantizar estabilidad en producción.",
     snippets: {
       config: {
-        lang: 'language-xml',
+        lang: "language-xml",
         code: `&lt;Project Sdk="Microsoft.NET.Sdk"&gt;
   &lt;PropertyGroup&gt;
     &lt;TargetFramework&gt;net8.0&lt;/TargetFramework&gt;
@@ -47,7 +49,7 @@ export const STACK_CONFIGS = [
 &lt;/Project&gt;`,
       },
       impl: {
-        lang: 'language-csharp',
+        lang: "language-csharp",
         code: `public class UserService {
     private readonly IUserRepository _repo;
 
@@ -63,7 +65,7 @@ export const STACK_CONFIGS = [
 }`,
       },
       test: {
-        lang: 'language-csharp',
+        lang: "language-csharp",
         code: `[Fact]
 public async Task GetUser_ShouldThrowException_WhenUserNotFound() {
     // Arrange: Simulamos la dependencia del repositorio
@@ -80,14 +82,17 @@ public async Task GetUser_ShouldThrowException_WhenUserNotFound() {
 
   // ─── Java ────────────────────────────────────────────────────────────────
   {
-    id: 'java',
-    label: 'Java',
-    badge: { text: 'JUnit 5 + Mockito', class: 'bg-orange-500/10 text-orange-400' },
+    id: "java",
+    label: "Java",
+    badge: {
+      text: "JUnit 5 + Mockito",
+      class: "bg-orange-500/10 text-orange-400",
+    },
     description:
-      'Se recomienda aislar servicios con mocks y validar reglas de negocio con escenarios de excepción.',
+      "Se recomienda aislar servicios con mocks y validar reglas de negocio con escenarios de excepción.",
     snippets: {
       config: {
-        lang: 'language-xml',
+        lang: "language-xml",
         code: `&lt;dependency&gt;
   &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;
   &lt;artifactId&gt;junit-jupiter&lt;/artifactId&gt;
@@ -102,7 +107,7 @@ public async Task GetUser_ShouldThrowException_WhenUserNotFound() {
 &lt;/dependency&gt;`,
       },
       impl: {
-        lang: 'language-java',
+        lang: "language-java",
         code: `public class ProductService {
     private final ProductRepository repository;
 
@@ -118,7 +123,7 @@ public async Task GetUser_ShouldThrowException_WhenUserNotFound() {
 }`,
       },
       test: {
-        lang: 'language-java',
+        lang: "language-java",
         code: `class ProductServiceTest {
     @Test
     void shouldThrowExceptionWhenProductStockIsLow() {
@@ -141,14 +146,14 @@ public async Task GetUser_ShouldThrowException_WhenUserNotFound() {
 
   // ─── Angular ─────────────────────────────────────────────────────────────
   {
-    id: 'angular',
-    label: 'Angular',
-    badge: { text: 'Jasmine + Karma', class: 'bg-red-500/10 text-red-300' },
+    id: "angular",
+    label: "Angular",
+    badge: { text: "Jasmine + Karma", class: "bg-red-500/10 text-red-300" },
     description:
-      'Se prioriza el desacoplamiento de la lógica del componente respecto al DOM para acelerar la ejecución de tests.',
+      "Se prioriza el desacoplamiento de la lógica del componente respecto al DOM para acelerar la ejecución de tests.",
     snippets: {
       config: {
-        lang: 'language-json',
+        lang: "language-json",
         code: `{
   "scripts": {
     "test": "ng test --watch=false --browsers=ChromeHeadless"
@@ -161,7 +166,7 @@ public async Task GetUser_ShouldThrowException_WhenUserNotFound() {
 }`,
       },
       impl: {
-        lang: 'language-typescript',
+        lang: "language-typescript",
         code: `@Injectable({ providedIn: 'root' })
 export class FinanceService {
   calculateInterest(principal: number, rate: number): number {
@@ -170,7 +175,7 @@ export class FinanceService {
 }`,
       },
       test: {
-        lang: 'language-typescript',
+        lang: "language-typescript",
         code: `it('should calculate compound interest correctly', () =&gt; {
     // Arrange: Preparamos los datos sintéticos
     const principal = 1000;
@@ -188,61 +193,27 @@ export class FinanceService {
 
   // ─── Python ──────────────────────────────────────────────────────────────
   {
-    id: 'python',
-    label: 'Python',
-    badge: { text: 'pytest + Faker', class: 'bg-emerald-500/10 text-emerald-300' },
-    description:
-      'El enfoque en Python combina pruebas unitarias rápidas con generación de datos sintéticos para cubrir casos borde.',
-    snippets: {
-      config: {
-        lang: 'language-ini',
-        code: `[tool.pytest.ini_options]
-addopts = "-q --maxfail=1"
-testpaths = ["tests"]
-
-[tool.coverage.run]
-branch = true
-source = ["app"]`,
-      },
-      impl: {
-        lang: 'language-python',
-        code: `def create_customer_payload(name: str, email: str, credit_limit: int) -&gt; dict:
-    if credit_limit &lt;= 0:
-        raise ValueError("credit_limit must be greater than zero")
-    return {
-        "name": name,
-        "email": email,
-        "credit_limit": credit_limit,
-    }`,
-      },
-      test: {
-        lang: 'language-python',
-        code: `import pytest
-from faker import Faker
-from app.customers import create_customer_payload
-
-fake = Faker()
-
-def test_create_customer_payload_is_valid():
-    payload = create_customer_payload(fake.name(), fake.email(), 5000)
-
-    assert payload["name"]
-    assert "@" in payload["email"]
-    assert payload["credit_limit"] &gt; 0`,
-      },
+    id: "python",
+    label: "Python",
+    badge: {
+      text: "pytest + Faker",
+      class: "bg-emerald-500/10 text-emerald-300",
     },
+    description:
+      "El enfoque en Python combina pruebas unitarias rápidas con generación de datos sintéticos para cubrir casos borde.",
+    panel: pythonPanel,
   },
 
   // ─── TypeScript ──────────────────────────────────────────────────────────
   {
-    id: 'ts',
-    label: 'TypeScript',
-    badge: { text: 'Jest + ts-jest', class: 'bg-cyan-500/10 text-cyan-300' },
+    id: "ts",
+    label: "TypeScript",
+    badge: { text: "Jest + ts-jest", class: "bg-cyan-500/10 text-cyan-300" },
     description:
-      'En TypeScript, privilegiamos funciones atómicas, manejo explícito de errores y contratos fuertemente tipados.',
+      "En TypeScript, privilegiamos funciones atómicas, manejo explícito de errores y contratos fuertemente tipados.",
     snippets: {
       config: {
-        lang: 'language-json',
+        lang: "language-json",
         code: `{
   "scripts": {
     "test": "jest --coverage"
@@ -255,7 +226,7 @@ def test_create_customer_payload_is_valid():
 }`,
       },
       impl: {
-        lang: 'language-typescript',
+        lang: "language-typescript",
         code: `export async function authMiddleware(req, res, next) {
   const token = req.headers?.authorization;
   if (!token) {
@@ -265,7 +236,7 @@ def test_create_customer_payload_is_valid():
 }`,
       },
       test: {
-        lang: 'language-typescript',
+        lang: "language-typescript",
         code: `describe('AuthMiddleware', () =&gt; {
   it('should return 401 if no token is provided', async () =&gt; {
     const req  = mockRequest();
